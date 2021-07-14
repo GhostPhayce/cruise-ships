@@ -1,16 +1,20 @@
 const Ship = require('../src/ship');
 
 describe("constructor", () => {
+    let ship;
+    beforeEach(() => {
+        ship = new Ship("Serenity", "Dover");
+    })
+
     it("returns an object", () => {
-        expect(new Ship("Serenity", "Dover")).toBeInstanceOf(Object);
+        expect(ship).toBeInstanceOf(Object);
     });
 
     it("sets the name and startingPort property", () => {
-        expect(new Ship("Serenity", "Dover")).toEqual({"name": "Serenity", "startingPort": "Dover"});
+        expect(ship).toEqual({"name": "Serenity", "startingPort": "Dover"});
     });
 
     it("checks a starting port has been assigned", () => {
-        const ship = new Ship("Serenity", "Dover");
         expect(ship.startingPort).toBe("Dover");
     })
 
