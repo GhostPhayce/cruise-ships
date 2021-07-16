@@ -3,13 +3,28 @@ class Ship {
         if (name === undefined || startingPort === undefined) {
             throw new Error("Please give the ship a name and a starting port.")
         } else {
-            this.name = name;
+            this.shipName = name;
             this.startingPort = startingPort;
         }
     }
 
-    setSail() {
-        return `${this.name} has departed from ${this.startingPort}.`
+    setSail(destinationPort) {
+        if (destinationPort === undefined) {
+            throw new Error("Please provide a destination port.")
+        } else {
+            this.destinationPort = destinationPort;
+            return `${this.shipName} has departed from ${this.startingPort} for ${this.destinationPort}.`
+        }
+    }
+
+    dock(currentPort) {
+        if (currentPort === undefined) {
+            throw new Error("Please provide the name of the port you wish to dock at.")
+        } else {
+            this.currentPort = currentPort;
+            this.destinationPort = null;
+            return `${this.shipName} has docked at ${this.currentPort}.`
+        }
     }
 };
 

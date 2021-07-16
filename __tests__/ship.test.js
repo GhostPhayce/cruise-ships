@@ -1,21 +1,22 @@
 const Ship = require('../src/ship');
+const Port = require('../src/port');
 
 describe("constructor", () => {
-    let ship;
+    let highwind;
     beforeEach(() => {
-        ship = new Ship("Highwind", "Junon");
+        highwind = new Ship("Highwind", "Junon");
     });
 
     it("returns an object", () => {
-        expect(ship).toBeInstanceOf(Object);
+        expect(highwind).toBeInstanceOf(Object);
     });
 
     it("sets the name and startingPort property", () => {
-        expect(ship).toEqual({"name": "Highwind", "startingPort": "Junon"});
+        expect(highwind).toEqual({"shipName": "Highwind", "startingPort": "Junon"});
     });
 
     it("checks a starting port has been assigned", () => {
-        expect(ship.startingPort).toBe("Junon");
+        expect(highwind.startingPort).toBe("Junon");
     });
 
     it("returns an error if arguments are not passed", () => {
@@ -24,16 +25,35 @@ describe("constructor", () => {
 });
 
 describe("setSail", () => {
-    let ship;
+    let highwind;
+    let port;
     beforeEach(() => {
-        ship = new Ship("Highwind", "Junon");
+        highwind = new Ship("Highwind", "Junon");
+        port = new Port("Costa del Sol");
     });
 
     it("gets the ship started on its journey", () => {
-        expect(ship.setSail()).toBe("Highwind has departed from Junon.");
-    });
-
-    it("expects startingPoint to be falsy after setSail() is executed", () => {
-        expect(ship.startingPort).toBeFalsy();
+        expect(highwind.setSail("Costa del Sol")).toBe("Highwind has departed from Junon for Costa del Sol.");
     });
 });
+
+describe("dock", () => {
+    let highwind;
+    let port;
+    beforeEach(() => {
+        highwind = new Ship("Highwind", "Junon");
+        port = new Port("Costa del Sol");
+    });
+
+    it("docks the ship at the named port", () => {
+        expect(highwind.dock("Costa del Sol")).toBe("Highwind has docked at Costa del Sol.");
+    });
+
+    it("returns an error if arguments are not passed", () => {
+        expect(() => highwind.dock()).toThrow(Error);
+    });
+
+    it("expects destinationPort to be falsy after setSail() is executed", () => {
+        expect(highwind.dock("Costa del Sol").destinationPort).toBeFalsy();
+    });
+})
