@@ -30,4 +30,12 @@ describe("Port", () => {
         junon.removeShip(explorer);
         expect(junon.ships).toEqual([highwind, discovery]);
     })
+
+    it("returns an error if the name is undefined", () => {
+        expect(() => new Port()).toThrow(Error);
+    });
+
+    it("returns an error if the name is not a string", () => {
+        expect(() => new Port(junon)).toThrow(Error);
+    });
 });

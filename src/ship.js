@@ -8,6 +8,7 @@ class Ship {
         this.startingPort = itinerary.ports[0];
         this.currentPort = itinerary.ports[0];
         this.previousPort = null;
+        this.currentPort.addShip(this);
     }
 
     setSail() {
@@ -19,6 +20,7 @@ class Ship {
           }
         this.previousPort = this.currentPort;
         this.currentPort = null;
+        this.previousPort.removeShip(this);
         // return `${this.shipName} has departed from ${this.previousPort.portName} for ${this.itinerary.ports[this.nextPort].portName}.`
 
     }
@@ -30,6 +32,7 @@ class Ship {
         const itinerary = this.itinerary;
         const previousPortIndex = itinerary.ports.indexOf(this.previousPort);
         this.currentPort = itinerary.ports[previousPortIndex + 1];
+        this.currentPort.addShip(this);
         // return `${this.shipName} has docked at ${this.currentPort.portName}.`
     }
 };

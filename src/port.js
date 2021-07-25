@@ -1,6 +1,6 @@
 class Port {
     constructor(name) {
-        if (name === undefined) {
+        if (name === undefined || typeof name !== "string") {
             throw new Error("Please provide a name for the port.")
         }
         this.portName = name;
@@ -12,8 +12,8 @@ class Port {
     }
 
     removeShip(ship) {
-        const shipToRemove = this.ships.indexOf(ship);
-        this.ships.splice(shipToRemove, 1);
+        const removeShip = this.ships.indexOf(ship);
+        this.ships.splice(removeShip, 1);
     }
 }
 
