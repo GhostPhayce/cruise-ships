@@ -1,33 +1,36 @@
 class Ship {
-    constructor(name, startingPort) {
-        if (name === undefined || typeof name !== "string" || startingPort === undefined || typeof startingPort !== "object") {
-            throw new Error("Please give the ship a name (string) and a starting port (object).")
-        } else {
-            this.shipName = name;
-            this.startingPort = startingPort;
-            this.currentPort = startingPort;
-        }
+    constructor(name, itinerary) {
+        // if (name === undefined || typeof name !== "string" || itinerary === undefined || typeof itinerary !== "object") {
+        //     throw new Error("Please give the ship a name (string) and an itinerary (object).")
+        // }
+        this.shipName = name;
+        this.itinerary = itinerary;
+        this.startingPort = itinerary.ports[0];
+        this.currentPort = itinerary.ports[0];
+        this.previousPort = null;
     }
 
-    setSail(destinationPort) {
-        if (destinationPort === undefined || typeof destinationPort !== "object") {
-            throw new Error("The destinationPort must be an object and not undefined.")
-        } else {
-            this.destinationPort = destinationPort;
-            this.departedFrom = this.currentPort;
-            this.currentPort = null;
-            return `${this.shipName} has departed from ${this.departedFrom.portName} for ${this.destinationPort.portName}.`
-        }
+    setSail() {
+        const itinerary = this.itinerary;
+        const currentPortIndex = itinerary.ports.indexOf(this.currentPort);
+
+        if (currentPortIndex === itinerary.ports.length - 1) {
+            throw new Error("End of itinerary reached.");
+          }
+        this.previousPort = this.currentPort;
+        this.currentPort = null;
+        // return `${this.shipName} has departed from ${this.previousPort.portName} for ${this.itinerary.ports[this.nextPort].portName}.`
+
     }
 
-    dock(port) {
-        if (port === undefined || typeof port !== "object") {
-            throw new Error("The port must be an object and not undefined.")
-        } else {
-            this.currentPort = port;
-            this.destinationPort = null;
-            return `${this.shipName} has docked at ${this.currentPort.portName}.`
-        }
+    dock() {
+        // if (port === undefined || typeof port !== "object") {
+        //     throw new Error("The port must be an object and not undefined.")
+        // }
+        const itinerary = this.itinerary;
+        const previousPortIndex = itinerary.ports.indexOf(this.previousPort);
+        this.currentPort = itinerary.ports[previousPortIndex + 1];
+        // return `${this.shipName} has docked at ${this.currentPort.portName}.`
     }
 };
 
