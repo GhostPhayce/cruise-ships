@@ -28,6 +28,18 @@ describe("Ship", () => {
         expect(highwind.previousPort).toEqual(null);
     });
 
+    it("returns an error if arguments are not passed", () => {
+        expect(() => new Ship()).toThrow(Error);
+    });
+
+    it("returns an error if the name is not a string", () => {
+        expect(() => new Ship(highwind, itinerary)).toThrow(Error);
+    });
+
+    it("returns an error if the itinerary is not an object", () => {
+        expect(() => new Ship("highwind", "itinerary")).toThrow(Error);
+    });
+
     it("setSail() and gets the ship started on its journey", () => {
         highwind.setSail();
         expect(highwind.currentPort).toBeFalsy();
@@ -52,16 +64,4 @@ describe("Ship", () => {
         expect(highwind.currentPort).toBe(costaDelSol);
         expect(costaDelSol.ships).toContain(highwind);
     });
-
-    // xit("returns an error if arguments are not passed", () => {
-    //     expect(() => new Ship()).toThrow(Error);
-    // });
-
-    // xit("returns an error if the name is not a string", () => {
-    //     expect(() => new Ship(highwind, itinerary)).toThrow(Error);
-    // });
-
-    // xit("returns an error if the itinerary is not an object", () => {
-    //     expect(() => new Ship("highwind", "itinerary")).toThrow(Error);
-    // });
 });
