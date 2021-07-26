@@ -9,6 +9,7 @@ class Ship {
         this.currentPort = itinerary.ports[0];
         this.previousPort = null;
         this.currentPort.addShip(this);
+        this.atSea = false;
     }
 
     setSail() {
@@ -18,10 +19,14 @@ class Ship {
         if (currentPortIndex === itinerary.ports.length - 1) {
             throw new Error("End of itinerary reached.");
         }
+        if (this.atSea === true) {
+            throw new Error(`${this.shipName} is already at sea.`)
+        }
         this.previousPort = this.currentPort;
         this.currentPort = null;
         this.destination = itinerary.ports[currentPortIndex + 1];
         this.previousPort.removeShip(this);
+        this.atSea = true;
         return `${this.shipName} has departed from ${this.previousPort.portName} for ${this.destination.portName}.`
 
     }
@@ -29,8 +34,12 @@ class Ship {
     dock() {
         const itinerary = this.itinerary;
         const previousPortIndex = itinerary.ports.indexOf(this.previousPort);
+        if (this.atSea === false) {
+            throw new Error(`${this.shipName} is already docked.`)
+        }
         this.currentPort = itinerary.ports[previousPortIndex + 1];
         this.currentPort.addShip(this);
+        this.atSea = false;
         return `${this.shipName} has docked at ${this.currentPort.portName}.`
     }
 };
