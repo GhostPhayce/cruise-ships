@@ -11,19 +11,25 @@ describe("Ship", () => {
             portName: 'Junon',
             ships: []
         };
+        
         costaDelSol = {
             addShip: jest.fn(),
             removeShip: jest.fn(),
             portName: 'Costa del Sol',
             ships: []
         };
+
         midgar = {
             addShip: jest.fn(),
             removeShip: jest.fn(),
             portName: 'Midgar',
             ships: []
         };
-        itinerary = new Itinerary([junon, costaDelSol, midgar]);
+
+        itinerary = {
+            ports: [junon, costaDelSol, midgar]
+        };
+
         highwind = new Ship("Highwind", itinerary);
     });
 
