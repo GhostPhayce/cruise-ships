@@ -5,9 +5,24 @@ const Itinerary = require('../src/itinerary');
 describe("Ship", () => {
     let highwind, junon, costaDelSol, midgar, itinerary;
     beforeEach(() => {
-        junon = new Port("Junon");
-        costaDelSol = new Port("Costa del Sol");
-        midgar = new Port("Midgar");
+        junon = {
+            addShip: jest.fn(),
+            removeShip: jest.fn(),
+            portName: 'Junon',
+            ships: []
+        };
+        costaDelSol = {
+            addShip: jest.fn(),
+            removeShip: jest.fn(),
+            portName: 'Costa del Sol',
+            ships: []
+        };
+        midgar = {
+            addShip: jest.fn(),
+            removeShip: jest.fn(),
+            portName: 'Midgar',
+            ships: []
+        };
         itinerary = new Itinerary([junon, costaDelSol, midgar]);
         highwind = new Ship("Highwind", itinerary);
     });
@@ -17,7 +32,7 @@ describe("Ship", () => {
     });
 
     it("gets added to a port on instantiation", () => {
-        expect(junon.ships).toContain(highwind);
+        expect(junon.addShip).toHaveBeenCalledWith(highwind);
     });
 
     it("checks a startingPort has been assigned", () => {
@@ -47,7 +62,7 @@ describe("Ship", () => {
 
     it("expects the ship to be removed from the previous port after setSail()", () => {
         highwind.setSail();
-        expect(junon.ships).not.toContain(highwind);
+        expect(junon.removeShip).toHaveBeenCalledWith(highwind);
     })
 
     it("returns an error if you try and setSail() when you have reached the end of the itinerary", () => {
@@ -61,7 +76,18 @@ describe("Ship", () => {
     it("dock() the ship at a port and adds it to the ports array", () => {
         highwind.setSail();
         highwind.dock();
-        expect(highwind.currentPort).toBe(costaDelSol);
-        expect(costaDelSol.ships).toContain(highwind);
+        expect(highwind.currentPort).toBeTruthy();
+        expect(costaDelSol.addShip).toHaveBeenCalledWith(highwind);
+    });
+
+    it("returns an error if you try and setSail() at sea", () => {
+        highwind.setSail();
+        expect(() => highwind.setSail()).toThrow(Error);
+    });
+
+    it("returns an error if you try and dock() when not at sea", () => {
+        highwind.setSail()
+        highwind.dock();
+        expect(() => highwind.dock()).toThrow(Error);
     });
 });
