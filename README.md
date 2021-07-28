@@ -19,7 +19,7 @@
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#install">Install</a></li>
-        <li><a href="#create-a-pet">Create a port, itinerary and ship</a></li>
+        <li><a href="#create-a-port-itinerary-and-ship">Create a port, itinerary and ship</a></li>
       </ul>
     </li>
     <li>
